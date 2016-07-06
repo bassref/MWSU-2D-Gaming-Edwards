@@ -197,8 +197,9 @@ function player(index, game,proxyServer) {
     
         this.sprite = this.game.add.sprite(this.x, this.y, 'dude');
 		this.game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
+		this.sprite.enableBody = true;
 		this.sprite.body.collideWorldBounds = true;
-		this.sprite.body.immovable = true;
+		this.sprite.body.immovable = false;
 		this.sprite.body.allowGravity = false;
     
         this.upKey = this.game.input.keyboard.addKey(Phaser.Keyboard.UP);
@@ -214,6 +215,8 @@ function player(index, game,proxyServer) {
         this.sprite.id = index;
 		this.state =  {alive: true, tint: this.tint, x: this.x, y: this.y};
         this.startTime = this.game.time.time;
+		
+		
 		
 }
       
@@ -235,13 +238,16 @@ function player(index, game,proxyServer) {
 			
     };
 
+	 
+	
     player.prototype.update = function() {
 			
-			for(var p in this.game.global.playerList)
+		/*	for(var p in this.game.global.playerList)
 			{
-				this.game.physics.arcade.collide(this.sprite, this.game.global.playerList[p].sprite);
-				console.log(this.game.global.playerList[p].sprite);
-			}
+				if(this.game.global.playerList[p].player_id != this.game.global.myId)
+					this.game.physics.arcade.collide(this.sprite, this.game.global.playerList[p].sprite);
+				//console.log(this.game.global.playerList[p].sprite);
+			} */
 			
 			   this.state.tint = this.tint;
 				this.state.x = this.sprite.x;
@@ -257,6 +263,7 @@ function player(index, game,proxyServer) {
 				if (this.upKey.isDown)
 				{
 					this.sprite.y-=3;
+
 				}
 				else if (this.downKey.isDown)
 				{
@@ -273,7 +280,7 @@ function player(index, game,proxyServer) {
 				} 
 		 
 		
-			
+		
       
     };
     
@@ -285,6 +292,8 @@ function player(index, game,proxyServer) {
         this.alive = false;
        this.sprite.kill();
     };
+	
+	
     
     
    /* return {
